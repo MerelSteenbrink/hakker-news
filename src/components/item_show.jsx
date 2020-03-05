@@ -76,11 +76,7 @@ class ItemShow extends Component {
 		    <div className="comment-list">
 		        <ol>
 		        	{this.state.comments.map(comment => {
-		        		return <Comment key={comment.id}
-		        		 by = {comment.by} 
-		        		 time = {comment.time} 
-		        		 text = {comment.text}
-		        		 />	
+		        		return <Comment key={comment.id}  comment = {comment} />	
 		        	})}
 		        </ol>
 	      </div>
