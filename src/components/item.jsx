@@ -9,7 +9,7 @@ class Item extends Component {
 						<p>{this.props.score} points</p>
 						<p> by {this.props.by}</p>
 						<p>{this.props.time}</p>
-						<p>{this.props.descandants}comments</p>
+						<p>{this.props.comments}comments</p>
 					</div>
 			</div>
 			)

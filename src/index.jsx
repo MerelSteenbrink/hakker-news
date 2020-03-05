@@ -16,12 +16,14 @@ import '../assets/stylesheets/application.scss';
 
 // Components //
 import App from './components/app';
-import ItemShow from './components/item_show'
+import ItemShow from './components/item_show';
+import Navbar from './components/navbar';
 
 const root = document.getElementById('root');
 if (root) {
   ReactDOM.render(
     <Router history={history}>
+      <Navbar/>
       <Switch>
         <Route exact path="/" component={App} />
         <Route  path="/item" component={ItemShow} />
