@@ -12,25 +12,45 @@ class ItemShow extends Component {
       		comments: []
     	};
   }
+
+  getKids = (ids) => {
+  	let url = 'https://hacker-news.firebaseio.com/v0/item/';
+    const promises = ids.map(id => { return fetch(url + id + ".json").then(response => response.json()) })
+    return Promise.all(promises)
+	}
+
+	putKids = (comment) => {
+  	if ( comment.kids ) {
+  		return this.getKids(comment.kids)
+  		.then(comments => {
+    			return Object.assign({}, comment, {kids: comments})
+    	})
+    } else {
+    		return comment
+   	}
+	}
+
 	componentDidMount(){
 		const id = this.props.location.search.slice(4)
 		fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
 			  .then(res => res.json())
 			  .then(result => {
 			  	this.setState({ item: result });
-			  	return result.kids
+			  	return result
 			  })
-			  .then(kids => {
-			  	const promises = kids.map(id => {
-						return fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
-      				.then(response => response.json())			  		
-			  	})
-			  	return Promise.all(promises)
+			  .then(result => { 
+			  	if (result.kids){
+			  		return this.getKids(result.kids)
+			  	} else {
+			  		return []
+			  	}})
+			  .then(comments => {
+			  	return Promise.all(comments.map(com => this.putKids(com)))
 			  })
-			  .then(result => {
+			  .then(comments => {
           	this.setState({
             	isLoaded: true,
-            	comments: result
+            	comments: comments
           	});
         	},
         	(error) => {
