@@ -12,22 +12,24 @@ class ItemShow extends Component {
       		comments: []
     	};
   }
-
-  getKids = (ids) => {
-  	let url = 'https://hacker-news.firebaseio.com/v0/item/';
-    const promises = ids.map(id => { return fetch(url + id + ".json").then(response => response.json()) })
-    return Promise.all(promises)
+	
+	thereWeGo = (comment) => {
+		if (comment.kids){
+			return this.putKids(comment)
+				.then(newcomment => {
+					return Promise.all(newcomment.kids.map(kid => this.thereWeGo(kid)))
+					.then(comments => {	return Object.assign({}, comment, {kids: comments})})
+			})
+		}	else {
+			return comment
+		}
 	}
 
 	putKids = (comment) => {
-  	if ( comment.kids ) {
-  		return this.getKids(comment.kids)
-  		.then(comments => {
-    			return Object.assign({}, comment, {kids: comments})
-    	})
-    } else {
-    		return comment
-   	}
+  	let url = 'https://hacker-news.firebaseio.com/v0/item/';
+    const promises = comment.kids.map(id => { return fetch(url + id + ".json").then(response => response.json()) })
+    return Promise.all(promises)
+  			.then(comments => {	return Object.assign({}, comment, {kids: comments})})
 	}
 
 	componentDidMount(){
@@ -38,19 +40,11 @@ class ItemShow extends Component {
 			  	this.setState({ item: result });
 			  	return result
 			  })
-			  .then(result => { 
-			  	if (result.kids){
-			  		return this.getKids(result.kids)
-			  	} else {
-			  		return []
-			  	}})
-			  .then(comments => {
-			  	return Promise.all(comments.map(com => this.putKids(com)))
-			  })
-			  .then(comments => {
+			  .then(result => this.thereWeGo(result))
+			  .then(result => {
           	this.setState({
             	isLoaded: true,
-            	comments: comments
+            	comments: result.kids
           	});
         	},
         	(error) => {
