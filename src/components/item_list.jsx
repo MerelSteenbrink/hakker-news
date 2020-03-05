@@ -52,16 +52,14 @@ class ItemList extends Component {
       	<div className="item-list">
 	        <ol>
 	        	{this.state.items.map(item => {
-	        		return <Link to={`/item?id=${item.id}`}>
-		        		<Item key={item.id}
-		        		 title = {item.title} 
+	        		return <Link to={`/item?id=${item.id}`} key={item.id}>
+		        		<Item title = {item.title} 
 		        		 url = {item.url} 
 		        		 score = {item.score} 
 		        		 by = {item.by} 
 		        		 time = {item.time} 
 		        		 comments = {item.descendants}
-		        		 id={item.id} 
-		        		 />	
+		        		 id={item.id} />	
 		        	</Link>
 	        	})}
 	        </ol>
