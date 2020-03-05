@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Item from "./item";
+import { Link } from 'react-router-dom';
 
 class ItemList extends Component {
 	constructor(props) {
@@ -51,15 +52,17 @@ class ItemList extends Component {
       	<div className="item-list">
 	        <ol>
 	        	{this.state.items.map(item => {
-	        		return <Item key={item.id}
-	        		 title = {item.title} 
-	        		 url = {item.url} 
-	        		 score = {item.score} 
-	        		 by = {item.by} 
-	        		 time = {item.time} 
-	        		 comments = {item.descendants}
-	        		 id={item.id} 
-	        		 />	
+	        		return <Link to={`/item?id=${item.id}`}>
+		        		<Item key={item.id}
+		        		 title = {item.title} 
+		        		 url = {item.url} 
+		        		 score = {item.score} 
+		        		 by = {item.by} 
+		        		 time = {item.time} 
+		        		 comments = {item.descendants}
+		        		 id={item.id} 
+		        		 />	
+		        	</Link>
 	        	})}
 	        </ol>
         </div>
