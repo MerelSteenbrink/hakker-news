@@ -1,0 +1,20 @@
+import React, {Component} from 'react';
+
+
+class Item extends Component {
+	render(){
+		return (
+			<div className= "item">
+				<div className="item-title"> {this.props.title}</div> 
+				<div className="item-details"> 
+					<p>{this.props.score} points</p>
+					<p> by {this.props.by}</p>
+					<p>{this.props.time}</p>
+					<p>{this.props.descandants} comments</p>
+				</div> 
+			</div>
+			)
+	}
+}
+
+export default Item;
