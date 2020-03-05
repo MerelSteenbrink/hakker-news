@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Item from "./item.js";
+import Item from "./item";
 
 class ItemList extends Component {
 	constructor(props) {
@@ -57,7 +57,8 @@ class ItemList extends Component {
 	        		 score = {item.score} 
 	        		 by = {item.by} 
 	        		 time = {item.time} 
-	        		 comments = {item.descendants} 
+	        		 comments = {item.descendants}
+	        		 id={item.id} 
 	        		 />	
 	        	})}
 	        </ol>

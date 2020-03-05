@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ItemList from "./item_list.js";
+import ItemList from "./item_list";
 
 
 class App extends Component {
