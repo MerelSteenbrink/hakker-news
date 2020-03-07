@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import * as timeago from 'timeago.js';
 
 class Comment extends Component {
 	renderChildren = (mum) => {
@@ -19,7 +20,7 @@ class Comment extends Component {
 	render(){
 		return (
 			<div className= "comment">
-				<div className="item-title"> {this.props.comment.by} -- {this.props.comment.time}</div> 
+				<div className="item-title"> {this.props.comment.by} -- {timeago.format(this.props.comment.time * 1000)}</div> 
 				<div className="text">{this.props.comment.text}</div>
 				<div className="children"> {this.renderChildren(this.props.comment)} </div>
 			</div>

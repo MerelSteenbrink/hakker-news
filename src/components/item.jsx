@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import * as timeago from 'timeago.js';
 
 class Item extends Component {
 	render(){
@@ -8,8 +9,8 @@ class Item extends Component {
 					<div className="details-container"> 
 						<p>{this.props.score} points</p>
 						<p> by {this.props.by}</p>
-						<p>{this.props.time}</p>
-						<p>{this.props.comments}comments</p>
+						<p>{timeago.format(this.props.time * 1000)}</p>
+						<p>{this.props.comments} comments</p>
 					</div>
 			</div>
 			)
