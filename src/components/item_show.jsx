@@ -18,7 +18,7 @@ class ItemShow extends Component {
 			return this.putKids(comment)
 			.then(newcomment => {
 				return Promise.all(newcomment.kids.map(kid => this.thereWeGo(kid)))
-				.then(comments => {	return Object.assign({}, comment, {kids: comments})})
+				.then(comments => {	return Object.assign({}, comment, {kids: comments.filter(com => !com.deleted)})})
 			})
 		}	else {
 			return comment
@@ -29,7 +29,7 @@ class ItemShow extends Component {
 		let url = 'https://hacker-news.firebaseio.com/v0/item/';
 		const promises = comment.kids.map(id => { return fetch(url + id + ".json").then(response => response.json()) })
 		return Promise.all(promises)
-		.then(comments => {	return Object.assign({}, comment, {kids: comments})})
+		.then(comments => {	return Object.assign({}, comment, {kids: comments.filter(com => !com.deleted)})})
 	}
 
 	componentDidMount(){
