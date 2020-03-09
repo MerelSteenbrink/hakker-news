@@ -6,7 +6,7 @@ class App extends Component {
 	render(){
 		return (
 			<div className= "container">
-				<ItemList/>
+				<ItemList tab={this.props.match.params.tab || "top"}/>
 			</div>
 			)
 	}

@@ -11,18 +11,18 @@ class ItemList extends Component {
     	};
   }
 
-
-  componentDidMount() {
-    fetch("https://hacker-news.firebaseio.com/v0/topstories.json")
+  fetchItems = () => {
+    const tab = ["new", "ask", "show", "jobs", "top"].includes(this.props.tab) ? this.props.tab : "top"; 
+    fetch(`https://hacker-news.firebaseio.com/v0/${tab}stories.json`)
       .then(res => res.json())
       .then(result => {
-      	const promises = result
-      	.slice(0,30)
-      	.map(id => {
-      		return fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
-      		.then(response => response.json())
-      	})
-      	return Promise.all(promises)
+        const promises = result
+        .slice(0,30)
+        .map(id => {
+          return fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
+          .then(response => response.json())
+        })
+        return Promise.all(promises)
       })
       .then(
         (result) => {
@@ -38,6 +38,16 @@ class ItemList extends Component {
           });
         }
       )
+  }
+
+  componentDidMount() {
+   this.fetchItems();
+  }
+
+  componentDidUpdate(prevProps){
+    if (this.props.tab !== prevProps.tab){
+      this.fetchItems()
+    }
   }
 
   render() {
