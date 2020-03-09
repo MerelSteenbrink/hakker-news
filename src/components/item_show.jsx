@@ -59,21 +59,22 @@ class ItemShow extends Component {
 		const item = this.state.item;
 		return (
 			<div>
-			<Item key={item.id}
-				title = {item.title} 
-				url = {item.url} 
-				score = {item.score} 
-				by = {item.by} 
-				time = {item.time} 
-				comments = {item.descendants}
-				id={item.id} />	
-			<div className="comment-list">
-			<ol>
-			{this.state.comments.map(comment => {
-				return <Comment key={comment.id}  comment = {comment} />	
-			})}
-			</ol>
-			</div>
+				<Item key={item.id}
+					title = {item.title} 
+					url = {item.url} 
+					score = {item.score} 
+					by = {item.by} 
+					time = {item.time} 
+					comments = {item.descendants}
+					text ={item.text}
+					id={item.id} />	
+				<div className="comment-list">
+					<ol>
+					{this.state.comments.map(comment => {
+						return <Comment key={comment.id}  comment = {comment} />	
+					})}
+					</ol>
+				</div>
 			</div>
 			)
 	}
