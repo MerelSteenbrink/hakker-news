@@ -1,4 +1,15 @@
-# react-boilerplate
+# HAKKER NEWS
+This is a Hacker News clone, built with React.
+To run this project locally, run:
+
+```
+yarn install
+yarn start
+```
+
+To start this project, I used undermentioned boilerplate:
+
+## react-boilerplate
 
 Simple react starter with the following config:
 
@@ -9,7 +20,7 @@ Simple react starter with the following config:
 - work with `.js` or `.jsx` files
 - main `application.scss` stylesheet is imported in `index.js` as a module to enjoy hot reloading
 
-## Scripts
+### Scripts
 
 To start the local Webpack Dev Server (usually on port `8080`):
 
