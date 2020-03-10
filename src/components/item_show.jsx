@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Item from './item';
 import Comment from './comment';
 
@@ -12,15 +12,15 @@ class ItemShow extends Component {
 			comments: []
 		};
 	}
-	
+
 	thereWeGo = (comment) => {
-		if (comment.kids){
+		if (comment.kids) {
 			return this.putKids(comment)
 			.then(newcomment => {
 				return Promise.all(newcomment.kids.map(kid => this.thereWeGo(kid)))
-				.then(comments => {	return Object.assign({}, comment, {kids: comments.filter(com => !com.deleted)})})
+				.then(comments => { return Object.assign({}, comment, { kids: comments.filter(com => !com.deleted) }) })
 			})
-		}	else {
+		} else {
 			return comment
 		}
 	}
@@ -29,10 +29,10 @@ class ItemShow extends Component {
 		let url = 'https://hacker-news.firebaseio.com/v0/item/';
 		const promises = comment.kids.map(id => { return fetch(url + id + ".json").then(response => response.json()) })
 		return Promise.all(promises)
-		.then(comments => {	return Object.assign({}, comment, {kids: comments.filter(com => !com.deleted)})})
+		.then(comments => { return Object.assign({}, comment, { kids: comments.filter(com => !com.deleted) }) })
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		const id = this.props.location.search.slice(4)
 		fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
 		.then(res => res.json())
@@ -55,30 +55,29 @@ class ItemShow extends Component {
 		}
 		)
 	}
-	render(){
+	render() {
 		const item = this.state.item;
 		return (
 			<div>
-				<Item key={item.id}
-					title = {item.title} 
-					url = {item.url} 
-					score = {item.score} 
-					by = {item.by} 
-					time = {item.time} 
-					comments = {item.descendants}
-					text ={item.text}
-					id={item.id} />	
-				<div className="comment-list">
-					<ol>
-					{this.state.comments.map(comment => {
-						return <Comment key={comment.id}  comment = {comment} />	
-					})}
-					</ol>
-				</div>
+			<Item key={item.id}
+			title = {item.title} 
+			url = {item.url} 
+			score = {item.score} 
+			by = {item.by} 
+			time = {item.time} 
+			comments = {item.descendants}
+			text ={item.text}
+			id={item.id} />	
+			<div className="comment-list">
+			<ol>
+			{this.state.comments.map(comment => {
+				return <Comment key={comment.id}  comment = {comment} />	
+			})}
+			</ol>
+			</div>
 			</div>
 			)
 	}
 }
 
 export default ItemShow;
-

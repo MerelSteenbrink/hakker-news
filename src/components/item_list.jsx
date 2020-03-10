@@ -2,41 +2,41 @@ import React, {Component} from 'react';
 import Item from "./item";
 
 class ItemList extends Component {
-	constructor(props) {
-    	super(props);
-    	this.state = {
-      		error: null,
-      		isLoaded: false,
-      		items: []
-    	};
+  	constructor(props) {
+     super(props);
+     this.state = {
+      error: null,
+      isLoaded: false,
+      items: []
+    };
   }
 
   fetchItems = () => {
     const tab = ["new", "ask", "show", "jobs", "top"].includes(this.props.tab) ? this.props.tab : "top"; 
     fetch(`https://hacker-news.firebaseio.com/v0/${tab}stories.json`)
-      .then(res => res.json())
-      .then(result => {
-        const promises = result
-        .slice(0,30)
-        .map(id => {
-          return fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
-          .then(response => response.json())
-        })
-        return Promise.all(promises)
+    .then(res => res.json())
+    .then(result => {
+      const promises = result
+      .slice(0,30)
+      .map(id => {
+        return fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
+        .then(response => response.json())
       })
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            items: result
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
+      return Promise.all(promises)
+    })
+    .then(
+      (result) => {
+        this.setState({
+          isLoaded: true,
+          items: result
+        });
+      },
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      }
       )
   }
 
@@ -58,23 +58,23 @@ class ItemList extends Component {
       return <div>Loading...</div>;
     } else {
       return (
-      	<div className="item-list">
-	        <ol>
-	        	{this.state.items.map(item => {
-	        		return (
-		        		<Item key= {item.id}
-                title = {item.title} 
-		        		url = {item.url} 
-		        		score = {item.score} 
-		        		by = {item.by} 
-		        		time = {item.time} 
-		        		comments = {item.descendants}
-		        		id={item.id} />	
-                )
-	        	})}
-	        </ol>
-        </div>
-      );
+       <div className="item-list">
+       <ol>
+       {this.state.items.map(item => {
+         return (
+          <Item key= {item.id}
+          title = {item.title} 
+          url = {item.url} 
+          score = {item.score} 
+          by = {item.by} 
+          time = {item.time} 
+          comments = {item.descendants}
+          id={item.id} />	
+          )
+       })}
+       </ol>
+       </div>
+       );
     }
   }
 }
